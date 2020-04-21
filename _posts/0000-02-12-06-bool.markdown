@@ -1,0 +1,353 @@
+---
+layout: post
+title: "Lab 6: Booleans"
+categories: lab
+date: 0000-02-12
+---
+
+## Main Event
+
+
+### <a name="animals"></a>1. Hungry animals
+To compare their diets, a cow and a goat have decided to keep track of
+the amount of grass they respectively eat each month. Each does so
+using a list of integers, where each integer represents the total
+number of kilograms consumed that month. Your job is to determine
+which animal has had more gluttonous months than the other in various
+situations:
+
+1. Both animals have been diligent and made recordings each month for
+   a year. Those recordings -- lists of integers -- can be found in
+   [helpers]({{site.baseurl}}/assets/lab-06/helpers.py):
+
+   ```python
+   >>> import helpers
+   >>> print(helpers.v1.cow)
+   [2, 16, 21, 10, 37, 19, 20, 1, 7, 17, 23, 22]
+   >>> print(helpers.v1.goat)
+   [11, 36, 23, 12, 3, 15, 14, 20, 25, 17, 0, 37]
+   ```
+
+   The lists are generated randomly, so the values you see may be
+   different. However, both will have 12 elements.
+
+   Compare the monthly balances of each animla. If the cow had more
+   months in which it ate more than the goat, print "The cow was
+   hungrier than the goat"; if goat had more months in which it ate
+   more than the cow, print "The goat was hungrier than the cow";
+   otherwise, print "They were both really hungry".
+
+2. Consider the case in which the animals did not agree on a month to
+   stop counting. As such, the lists the provide are potentially of
+   different lengths:
+
+   ```python
+   >>> import helpers
+   >>> print(helpers.v2.cow)
+   [15, 31, 8, 3, 27, 16, 10, 13, 22, 29, 0, 26, 32]
+   >>> print(helpers.v2.goat)
+   [28, 33, 17, 32, 0, 39, 19, 12]
+   ```
+
+   In this case, the goat stopped after eight months, while the cow
+   continued for another five thereafter. Again, `helpers` generates
+   the lists randomly, so the values and lengths you see may be
+   different. You can assume that each animal started at the same
+   time, and that each index corresponds to the same month.
+
+   You can assume that each list will have at least one element.
+
+3. Not only do the animals not agree on a stop date, but their
+   recorders are faulty: when entering values, they sometimes
+   inadvertently insert a negative number:
+
+   ```python
+   >>> import helpers
+   >>> print(helpers.v3.cow)
+   [16, 36, 6, -3, 31]
+   >>> print(helpers.v3.goat)
+   [11, -5, 16]
+   ```
+
+   In this case, both animals have valid recordings in their first
+   month (index zero); thus, the indices can be compared. In the next
+   month, however, the goat's recording is faulty. The negative value
+   should be ignored: the cow's 36 kilos should be compared with the
+   goats 16.
+
+
+### <a name="adder"></a>2. Binary addition
+Write a program that adds two binary numbers (represented as strings)
+using a loop.
+
+*Note:* you do not have to worry about carrying for these
+exercises. They are strictly about basic addition. If you are curious
+about carrying, check out the [additional practice](#full-adder).
+
+1. First, focus on the logic: create two strings:
+
+   ```python
+   x = '01'
+   y = '10'
+   ```
+
+   Each character of the respective strings can be thought of as a
+   "bit". You will have to consider each individually when calculating
+   the overall sum; in this case `'10'` (as a string). While it may be
+   tempting to reverse the string prior to looping, challenge yourself
+   by not doing so: [*use the loop,
+   Luke*](https://youtu.be/o2we_B6hDrY).
+
+2. Update the code to handle situations in which `x` and `y` do not
+   have the same number of digits:
+
+   ```python
+   x = '10101'
+   y = '1010'
+   ```
+
+3. Convert the final value back to a decimal. Again, this should be
+   done using only a loop and simple logic. Remember, the digit's
+   place dictates its contribution to the final value:
+
+   ![](http://mathurl.com/y9gy6et4.png)
+
+Python has the ability to convert numbers to various bases. Recall
+[int](https://docs.python.org/3/library/functions.html#int), a
+function that converts a value to an integer. By default, it assumes
+the value you are passing it is a value of base 10. By passing a
+second argument, however, you can specify that you would like a
+different base:
+
+```
+>>> x = '10101'
+>>> int(x)
+10101
+>>> int(x, 2)
+21
+```
+
+Python has another function,
+[bin](https://docs.python.org/3/library/functions.html#bin) that will
+convert a number to a binary string. Continuing the previous
+interaction:
+
+```
+>>> bin(int(x, 2))
+'0b10101'
+```
+
+As you play with different values to ensure your algorithms are
+correct, use these Python built-in's to check your work.
+
+
+## Additional Practice
+
+
+### <a name="full-adder"></a>1. Full adder
+You may have noticed that the adder you [previously developed](#adder)
+did not always work. In particular, if the addition required a carry,
+things probably went awry. This exercise will have you correct that.
+
+First, set `x` and `y` to values in which a carry is required. A good
+start is
+
+```python
+x = 11
+y = 01
+```
+
+You should definitely try more complicated values at some point, but
+in just getting started, using the simplest example possible will help
+you focus on getting things right.
+
+#### Hairy carry
+
+When no carry was involved, it was convenient to view binary addition
+as simply xor. However, now you must understand the complete extent of
+the story. Addition is actually two components: the addition itself,
+and calculation of the carry. These two steps comprise of what is
+known as a "[half
+adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Half_adder)."
+Remember, however, that the addition of any given component may have a
+carry value coming in. Taking into account this value is what
+comprises the other half of the adder. Together the two halves make up
+a "[full
+adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder)."
+
+So that programs are general, it is assumed that during the first
+addition (the right-most components) a carry of zero came in. Further,
+it is assumed that there is an implicit final addition (after the
+left-most component) of two zeros so that a potential final carry can
+be taken into account.
+
+Being able to add binary numbers lies at the foundation of calculators
+in particular, and computers in general. Understanding how it is done
+also gives you an appreciation for the type of problems hardware
+designers must solve.
+
+#### Make it pretty
+
+What would beautifully working full adder be without beautifully
+looking output? Format your output such that it is visually clear. If
+`x = '100101'` and `y = '10101'`, your code would produce:
+
+```
+  100101
++  10101
+--------
+  111010 = 58
+```
+
+A slightly longer example:
+
+```
+    1111010011100111001
++  10101001111011011111
+-----------------------
+  100100100011000011000 = 1197592
+```
+
+
+### <a name="drops"></a>2. Tear drops
+This exercise will help you get comfortable using the command line. In
+doing so, you'll build "tear drops," a program that only works in the
+terminal.
+
+#### Terminal
+
+The "terminal" is a command line interface that allows you to interact
+with your computer. It exposes both your system, and raw programs that
+allow you to do different things. Many window applications call these
+programs on your behalf---from the terminal you can call them
+directly.
+
+There are several programs available to you. The most important,
+however, are:
+
+* **cd** Change to a specified directory.
+
+* **ls** List the contents of a directory. (In Windows, the equivalent
+    command is dir)
+
+* **python3** Pass a given file to the Python interpreter (version 3,
+    which we've been using thus far).
+
+If you've never interacted with your system via the command line, then
+you probably think of files and folders as icons in a windowing
+system. Double clicking a folder opens that folder, exposing other
+files; double clicking a file opens that file in a predetermined
+program.
+
+Files and folders on your computer actually live in a hierarchy. The
+top level of that hierarchy is known as the "root." The root contains
+various folders and files, for example folders A and B, and file
+c. Once inside folder A, you cannot see folder B; you have to go back
+to the root to get access.
+
+Try it: open a terminal and type `ls`. If you're using a Mac, one of
+the folders you might see in this listing is "Downloads". Change to
+the Downloads directory (`cd Downloads`). Run `ls` again---notice a
+difference? To get back to your previous location, type (`cd ..`,
+which means go "up" the file hierarchy, which is happens to be the
+previous location in this example).
+
+When you write programs in Spyder (or whatever editor you are
+running), you save those files somewhere on your file system. Identify
+where that is in Spyder (*Save As* should make it clear) and navigate
+to that place in terminal. For example, if you saved the file to
+"Desktop", you would type `cd Desktop` (the first command after
+opening terminal).
+
+Assuming your file were called "best.py", you would type `python3
+best.py` to run it.
+
+#### Clear screen
+
+What's nice about running things in the terminal is that you can clear
+the screen at anytime, and print things on what appears to be a blank
+canvas. Try it:
+
+```python
+import os
+os.system('clear')
+print("Hello")
+```
+
+(For Window's users, you should pass the string "cls" to `os.system`
+instead of "clear".)
+
+You can use this to give the illusion of animation:
+```python
+import os
+
+for i in range(10):
+    os.system('clear')
+    print(i)    
+```
+
+You can slow that down if it's too fast by using the sleep
+function in the time module:
+
+```python
+import os
+import time
+
+for i in range(10):
+    os.system('clear')
+    print(i)
+    time.sleep(2 ** -3)    
+```
+
+Where `sleep` takes the amount of time you want the program to pause.
+
+#### Tear drops
+
+You can use this idea to make tear drops fall down your screen. In
+reality, these are actually `*`'s that "move" up and down. In the
+first frame:
+
+```
+***********
+*** ** ****
+**  ** * **
+**  *  * **
+```
+
+In the second:
+
+```
+***********
+*** *******
+*** ** ****
+ *        *
+```
+
+It's more impressive when the first is cleared, and the second
+follows. Ask for a demonstration if you still don't get the gist.
+
+Aside from clearing the screen and sleep'ing, you'll need to figure
+out how to control these stars. Essentially, it's a list-of-lists in
+which the inner lists contain the stars for either a row or a
+column. At each iteration, you need to figure out whether a given set
+of stars should have a value removed, added, or remain constant
+(that's essentially how they "move").
+
+While it might seem straightforward to make inner lists be the rows on
+the screen, it is probably much easier if they represent the
+columns. When it comes time to print, you can then transpose that
+matrix so that things appear to move top-to-bottom.
+
+Finally, [helpers.py]({{ site.baseurl }}/assets/lab-06/helpers.py) is
+a module that provides variables you can use for your board
+dimensions:
+
+```python
+import helpers.py
+print(helpers.terminal.rows, helpers.terminal.columns)
+```
+
+These variables are initialized based on the dimensions of your
+terminal. As always, make sure helpers.py is in the same directory as
+your teardrops implementation.
+

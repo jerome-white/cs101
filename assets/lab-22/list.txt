@@ -1,0 +1,15 @@
+There are a few things you should keep in mind:
+
+ o Working with lists is tedious.
+ o HTML doesn't care about the ASCII new line character!
+ o Brexit negotiations may be called Bregotiations.
+
+Once you have this firmly planted in your brain you can do a few other
+things:
+
+ o Learn Spanish
+ o Eat more vegetables.
+ o Get your submarine drivers license.
+ o Make sure you mobile is topped up.
+
+Got it?

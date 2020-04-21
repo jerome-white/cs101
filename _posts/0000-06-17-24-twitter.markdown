@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Lab 24: Twitter"
+categories: lab
+date: 0000-06-17
+---
+
+## Main Event
+
+
+### <a name="display"></a>1. Display tweets
+Display all of the tweets currently in the database as an HTML
+table. How you order the columns is up to you. You should display all
+information related to a tweet.
+
+
+### <a name="tweet"></a>2. Tweet!
+Above your table, display a form consisting of three elements:
+
+1. an input box where a user will enter their user name;
+
+2. an input box where a user will enter their tweet; and
+
+3. a submit button.
+
+The form should POST the information back to the page.
+
+```html
+<form method="POST" action="/">
+```
+
+
+### <a name="filter"></a>3. Tweet filters
+Beneath your tweet form, but still above the tweet display table,
+build another form. This form will allow you to filter tweets by a
+given user, and to control the number of tweets displayed. The form
+should contain the the following three elements:
+
+1. A selection menu (HTML
+   [option](https://www.w3schools.com/tags/tag_option.asp)) containing
+   all unique Twitter users in the database, in ascending order. The
+   first user listed should be a special user that is not in the
+   database. Selection of that user should signify that no user
+   filtration should take place.
+
+2. A text box in which the user can enter the number of tweets they
+   would like to display.
+    
+3. A submit button.
+
+Unlike the previous form, this form should be submitted using as a GET
+request.
+
+```html
+<form method="GET" action="/">
+```
+
+### <a name="likes"></a>4. Like!
+Retool the ID column to allow the user to "like" that particular
+tweet.
+
+1. Remove the table heading for ID. You can replace the heading with
+   "Like," or just leave it empty.
+
+2. Instead of displaying the tweets ID, display the word "like." That
+   word should actually be a link back to the page itself defining a
+   query string that informs the page to increment the number of likes
+   for that tweet ID. Thus, although this column no longer displays
+   the ID, it still depends on it.
+
+   If you are confused, recall the counter example we did in class in
+   which the anchor tag was used to increment a counter.
+

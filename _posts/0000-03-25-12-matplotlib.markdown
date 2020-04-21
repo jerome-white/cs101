@@ -1,0 +1,136 @@
+---
+layout: post
+title: "Lab 12: Plotting data (matplotlib)"
+categories: lab
+date: 0000-03-25
+---
+
+## Main Event
+
+
+### <a name="intro"></a>1. Practice plots
+The objective of this lab is to reproduce various figures using
+Matplotlib with data from [tips.csv]({{ site.baseurl
+}}/assets/lab-12/tips.csv). There is a large amount of documentation
+for Matplotlib online; two good references are:
+
+* [PyPlot API](https://matplotlib.org/api/pyplot_summary.html)
+* [Matplotlib tutorial](http://www.scipy-lectures.org/intro/matplotlib/matplotlib.html)
+* "[Matplotlib Tutorial Series---Graphing in Python](https://www.youtube.com/playlist?list=PLQVvvaa0QuDfefDfXb9Yf0la1fPDKluPF)"
+
+One of the best ways to learn, however, is by example. The [Matplotlib
+gallery](http://matplotlib.org/gallery.html) is full of them.
+
+
+### <a name="bar"></a>2. Bar chart
+1. Draw a "stacked" bar plot consisting of the average total bill and
+   the average tip for given days of the week:
+
+   ![]({{ site.baseurl }}/assets/lab-12/bar-1.png)
+
+   You will first have to obtain the average values for each column,
+   for each day. You can use numpy to find the mean:
+
+   ```
+   >>> import numpy as np
+   >>> np.mean([1, 2, 3, 4])
+   2.5
+   ```
+   
+   You will then have to draw the figure---the [Matplotlib
+   documentation](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar.html#matplotlib.pyplot.bar)
+   is a good place to start in learning to do this. Make sure to
+   include the legend!
+
+2. Create a new figure (a new Python file) based on the previous bar
+   chart. This time, however, place the respective averages
+   side-by-side and include error bars:
+
+   ![]({{ site.baseurl }}/assets/lab-12/bar-2.png)
+
+   See Matplotlib's
+   [example](http://matplotlib.org/examples/api/barchart_demo.html). Again,
+   numpy can help:
+
+   ```
+   >>> # assuming numpy was previously imported...
+   >>> np.std([1, 2, 3, 4])
+   1.1180339887498949
+   ```
+
+
+### <a name="pie"></a>3. Pie chart
+Create a [pie
+chart](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pie.html#matplotlib.pyplot.pie)
+in which each slice is the percentage of the respective days bills to
+the overall total:
+
+![]({{ site.baseurl }}/assets/lab-12/pie.png)
+
+In this case, to get the respective slices labeled with the
+percentage, use:
+```python
+autopct='%1.1f%%'
+```
+
+in the `plt.pie` function. Further, in order to get the chart to
+appear as a circle, instead of an ellipse, use
+
+```
+>>> plt.axis('equal')
+```
+
+
+### <a name="scatter"></a>4. Scatter plot
+A [scatter
+plot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.scatter.html#matplotlib.pyplot.scatter)
+can be a good way to recognize clusters in your data. In this case,
+the total bill versus the amount tipped for various patrons:
+
+![]({{ site.baseurl }}/assets/lab-12/scatter.png)
+
+Colors represent an individuals gender, as well as their smoking
+preference.
+
+It is recommended that you develop this in phases:
+
+1. Create a scatter plot that does not contain a legend. To do this,
+   create three lists---one for total bill, another for tipped amount,
+   and a third for colors---in which each column corresponds to an
+   individual patron. This will allow you to make one call to
+   `plt.scatter`.
+  
+2. Adding a legend requires separate calls to `plt.scatter` for each
+   "categorzation" of the data. That is, for each set representing
+   male/female and smoker/non-smoker, make separate calls to
+   `plt.scatter`. See [Stack
+   Overflow](http://stackoverflow.com/a/17412294}{StackOverflow) for
+   an example.
+
+
+### <a name="boxplot"></a>5. Boxplot
+A
+[boxplot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.boxplot.html#matplotlib.pyplot.boxplot)
+is a good way to see the distribution of data. Here, the amount tipped
+each day:
+
+![]({{ site.baseurl }}/assets/lab-12/boxplot.png)
+
+The horizontal line in each box represents the average tip for the
+respective day.
+
+The Pyplot documentation shows several
+[examples](http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.boxplot)
+of how to create boxplots (in the image above, `showfliers` is `False`),
+while [Knowledge
+Stockpile](http://blog.bharatbhole.com/creating-boxplots-with-matplotlib/)
+provides a simple example that might be easier to follow.
+
+The most difficult part is getting your data into a format the
+function understands: a list consisting of lists of data
+values. Specifically, if *d* were a list, *d*'s zeroth element would
+be a list of all tips on a given day. Keep in mind that sublists do
+not necessarily need to correspond (to day of the week, or time, for
+example), as the average and outlier calculation is not dependent on
+order.
+

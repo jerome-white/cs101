@@ -1,0 +1,173 @@
+---
+layout: post
+title: "Lab 19: PyGame (cont.)"
+categories: lab
+date: 0000-05-13
+---
+
+## Main Event
+
+
+### <a name="intro"></a>1. LibPng
+In some implementations, Pygame relies on
+[libpng](http://www.libpng.org/pub/png/libpng.html) to display PNG
+images. If you are experiencing problems trying to
+[blit](https://www.pygame.org/docs/ref/surface.html#pygame.Surface.blit)
+PNG's to your screen, it may be because you don't have this library
+installed.
+
+* Mac users should install via [Homebrew](https://brew.sh):
+
+  ```bash
+  $> brew install libpng
+  ```
+
+* Linux users can install via
+  [apt](https://help.ubuntu.com/lts/serverguide/apt.html):
+
+  ```bash
+  $> sudo apt-get install libpng-dev
+  ```
+
+* Windows users should ask a course staff member.
+
+
+### <a name="paddle"></a>2. Paddle ball
+Make the paddle hit the ball:
+
+![]({{site.baseurl}}/assets/lab-19/paddle.png)
+
+* Update your particle class to operate with rectangles instead of
+  circles. Your particles should move around the screen, "bouncing"
+  off the walls. For now, it is good enough to have a single particle
+  on your surface.
+  
+* Create another rectangle that is able to "slide" from left-to-right
+  depending on the arrow key being pressed.
+
+* If the ball
+  [collides](http://www.pygame.org/docs/ref/rect.html#pygame.Rect.colliderect)
+  with the sliding rectangle, have it "bounce" away in another
+  direction. How this bouncing is accomplished is up to you. Pygame
+  [provides a
+  method](http://www.pygame.org/docs/ref/math.html#pygame.math.Vector2.reflect)
+  for calculating the physics, if you're up for figuring it out.
+
+* Maintain a counter in the upper-right corner of the screen that
+  increments each time the particle bounces off the slider.
+
+* If the ball moves past the slider---its coordinates are below
+  the bottom of the screen---the game should end.
+
+* Finally, if a user clicks somewhere on the surface, add a
+  particle to the game based on the position of the mouse click.
+
+
+### <a name="invaders"></a>3. Invaders
+The objective of this game is to have the spaceship dodge particles:
+
+![]({{site.baseurl}}/assets/lab-19/invaders.png)
+
+An image of the spaceship can be downloaded
+[here]({{site.baseurl}}/assets/lab-19/space-ship.png). Its dimensions
+are 40-pixels by 40-pixels.
+
+* Particles will now be created dynamically and must decide where to
+  be placed on their own. Thus, modify your particle class from the
+  previous exercise such that the constructor takes a single argument
+  representing the width of the surface. The constructor should then
+  create a rectangle and decide where it should go; that is between
+  position zero and the width. Since it starts at the top, the
+  horizontal component can always be zero.
+
+  The velocity of the particle should be such that it falls straight
+  down.
+  
+* Create a class that contains your ship. The class should actually do
+  two things: maintain the ship image---so actually load the image in
+  the constructor---and maintain a rectangle that surrounds the
+  image. The rectangle should not be displayed, but its location
+  should *always* correspond to the ship image. To do this, create
+  three methods:
+  
+  * Display the object
+
+    ```python
+    def display(self)
+    ```
+
+    "Blits" the image to the surface using the coordinates of the
+    rectangle. A rectangle object has [several
+    attributes](http://www.pygame.org/docs/ref/rect.html) that will
+    allow you get access to its location; `topleft` is probably the
+    most useful.
+
+  * Move left
+
+    ```python
+    def left(self)
+    ```
+
+    Moves the rectangle to the left, much like what was done to the
+    bar in the previous exercise.
+      
+  * Move right
+
+    ```python
+    def right(self)
+    ```
+
+    Analogous, but moves the rectangle to the right.
+  
+* In the event loop, move the ship based on the key board input;
+  again, much like what was done in the previous exercise.
+  
+* Decide whether to create a new particle. Using the random number
+  generator can help.
+  
+* Move and display each particle, along with the ship. If a particle
+  collides with a ship, the game should be over.
+
+
+## Additional Practice
+
+
+### <a name="removal"></a>1. Removing particles
+Managing all those random particles in the [previous
+exercise](#invaders) required some sort of collection-like data
+structure. If you were able to play the game for a while, you may
+notice it getting slow. This is likely because that collection
+structure has grown into a behemoth of particles. However, do you
+actually need all of those particles?
+
+Once a particle makes its way off of the screen---it has been dodged
+by the ship---there is really no need to keep it in the collection any
+longer. There are several strategies for removing elements from a
+collection. Think through how you might do this on paper before trying
+an implementation. Keep in mind that removing items from a collection
+while also iterating over that collection is generally not a good
+idea.
+
+
+### <a name="shooter"></a>2. Shooting invaders
+Allow [your ship](#invaders) to go on the offensive:
+
+* If the up-arrow is pressed, a "bullet" (another rectangle, really)
+  should be release from the nose of the ship. It should travel
+  upwards, until it hits a particle. Such a collision should erase
+  both the bullet and the particle from the screen.
+  
+* Keep score! For each particle that's hit, increment some counter.
+
+* Make the end-of-game nicer than merely having Pygame quit. Some
+  screen overlay announcing the finish could be fun.
+
+
+### <a name="physics"></a>3. Physics simulation
+Physics is an important part of getting video games right. Portions of
+this lab have touched on how to do that, but have done so in a crude
+fashion, and with very little depth. Work your way through Peter
+Collingridge's [Pygame physics
+simulation](http://www.petercollingridge.co.uk/pygame-physics-simulation)
+tutorial to become a real master.
+

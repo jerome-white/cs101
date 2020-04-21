@@ -1,0 +1,264 @@
+---
+layout: post
+title: "Lab 3: For loops"
+categories: lab
+date: 0000-01-22
+---
+
+## Main Event
+
+
+### <a name="integers"></a>1. Integers
+#### <a name="integers:addition"></a>Addition
+
+Write a for-loop to add the numbers 1--10. Once the loop is finished,
+print the value.
+
+#### <a name="integers:multiplication"></a>Multiplication
+
+Write another for-loop that multiplies the numbers 1 through 100. Remember, the `range` function is your friend.
+
+
+### <a name="strings"></a>2. Strings
+Consider the following string:
+
+```python
+s = 'The rain in Spain falls mainly on the plain'
+```
+
+Complete the following tasks only using for-loops over `s`. While it
+may be tempting to use string methods or Python built-in functions to
+accomplish these tasks, don't! Each can be performed without altering
+the original string. Specifically you should either looping over the
+original string:
+
+```python
+for i in s:
+```
+
+or the original strings' indices:
+```python
+for i in range(len(s)):
+```
+Good luck!
+
+#### <a name="strings:length"></a>Length
+
+Use a for-loop to count the number of characters in `s`.
+
+#### <a name="strings:creation"></a>Create
+
+Use a for-loop to generate a new string `s1`, where `s1` is an exact
+replica of `s`.
+
+#### <a name="strings:reverse"></a>Reverse
+
+Use a for-loop to generate a new string `t`, where `t` is the reverse
+of `s`. After the loop is finished, print `t` to verify your
+work.
+
+Again, you cannot use any built-in string methods, on either `s` or
+`t`, nor do you need to convert `s` to a list. Remember, *string
+addition is not
+[commutative](https://en.wikipedia.org/wiki/Commutative_property)*!
+
+#### <a name="strings:upper"></a>Upper
+
+Use a for-loop to generate a new string `v`, where `v` is the
+upper-case version of `s`. It is okay if you call `upper` on the
+individual character.
+
+#### <a name="strings:count"></a>Count
+
+Count is a useful string method. Here we will implement it ourselves!
+Consider a new string
+
+```python
+c = 'a'
+```
+
+Use a for-loop to count the number of occurrences of `c` in `s`. As
+with previous assignments, we do not have to use an if-statement here;
+it is enough to cast the Boolean equality test to an integer:
+
+```
+>>> s1 = 'a'
+>>> s2 = 'b'
+>>> int(s1 == s2)
+0
+```
+
+If you do not understand what's going on here, change the value of
+`s2` to 'a' and perform the cast again.
+
+#### <a name="strings:count-general"></a>Generalized count
+
+Count the number of occurrences of `c2` in `s`, where
+
+```python
+c2 = 'ain'
+```
+
+Whereas the last exercise compared a character to each character of
+`s`, this exercise can be thought of as comparing a string to a
+*slice* of `s`.
+
+
+### <a name="lists"></a>3. Lists
+
+#### <a name="lists:summation"></a>Summation
+
+Create a list of integers. Produce a new list that is the cumulative
+sum of that list:
+
+```
+>>> original = [ 1, 2, 3, 4 ]
+>>> # ... you create sumlist
+>>> print(sumlist)
+[ 1, 3, 6, 10 ]
+```
+
+It's probably best to develop this in stages: using a list of three
+or four numbers to ensure your *algorithm* is correct, then move on
+to larger list sizes to really see it in action.
+
+#### <a name="lists:randomization"></a>Randomization!
+
+1. Use Python's random number generator to create a list of random
+   length containing values that are also random. You should be
+   familiar with random numbers in Python. This time we will use a
+   different function from the random library:
+
+   ```python
+   import random
+   random.randrange(10)
+   ```
+
+   produces a random number between 0 and 9. Like the `range` function,
+   you can give two arguments to start from something other than zero:
+
+   ```python
+   random.randrange(5, 10)
+   ```
+
+   The range you use is up to you, but should probably start at one
+   (why?).
+
+2. Once that is complete, use a separate for-loop to find the sum of
+   your new list. The final output of this program should be the list
+   size, followed by its summation.
+
+In developing your program, it is advisable to first use relatively
+small ranges for the random number
+
+```python
+random.randrange(1, 5)
+```
+
+and to print the generated list along with the final output. Once you
+are confident your code is correct, comment out the statement that
+prints the list, and increase the possible range of list sizes:
+
+```python
+random.randrange(10 ** 3, 10 ** 4)
+```
+
+
+### <a name="vowels"></a>4. Loop transformation
+Recall our exercise on counting vowels. At the time, we had five
+separate calls to
+[count](https://docs.python.org/3/library/stdtypes.html#str.count) for
+each vowel:
+
+```python
+myString = 'The quiCk brOwn fOx jumped over thE lAzy dog'
+aCount = myString.count('a')
+eCount = myString.count('e')
+iCount = myString.count('i')
+oCount = myString.count('o')
+uCount = myString.count('u')
+print(aCount + eCount + iCount + oCount + uCount)
+```
+
+Rewrite this code using a for-loop so that it is more succinct. If you
+don't know where to begin, think about the following:
+
+1. What statements are being repeated?
+
+2. What is changing in those statements and how can that change be
+   captured in a sequence?
+
+3. How can the techniques from [previous
+   exercises](#integers:addition) keep a tally of what's going on?
+
+You should count all vowels, regardless of casing.
+
+
+## Additional Practice
+
+
+### <a name="pyramid"></a>1. Pyramid
+Ask the user for an integer. Use a single for-loop to produce
+[equilateral
+triangle](https://en.wikipedia.org/wiki/Equilateral_triangle) of
+stars, where the triangle's edge length is the specified integer. As
+an example:
+```
+>>> Please enter an edge length: 5
+    *
+   * *
+  * * *
+ * * * *
+* * * * *
+```
+
+
+### <a name="str-rotation"></a>2. String rotation
+String rotation is the act of shifting letters in a string. As
+an example: the letters on a compass are often printed in a circle,
+like a clock with four numbers. If you were to lay the letters in a
+straight line, assuming north were the first letter (since it's on
+top), you'd have: NESW. If we were to right-rotate this string by
+one, we would have WNES (and subsequently, if we were to put it back
+on the compass, west would be on top).
+
+1. Create a for-loop that rotates an arbitrary string by one place. It
+   is okay if you use the compass example from the explanation.
+
+2. Do the same thing using string slicing.
+
+3. Which is faster? Here, we'll look at a rudimentary way to time a
+   *block* of code using
+   [timeit](https://docs.python.org/3/library/timeit.html) module:
+
+   ```python
+   import timeit
+   start_time = timeit.default_timer()
+   # your code block
+   print(timeit.default_timer() - start_time)
+   ```
+
+   A couple of things to note:
+
+   1. Your "code block" in the for-loop case is the for-loop itself;
+      in the slice case it's the one (or more) lines you've used to do
+      the slicing---do not include any code that creates the original
+      string in this block.
+
+   2. You might not get interesting results if your string is too
+      short. Use another for-loop to create a really large string
+      (~2<sup>20</sup> characters work decently on my machine). You
+      can use the `random` function from above to generate characters
+      (just cast the returned integer to a string).
+
+   Finally, run it a few times to give some confidence to your
+   conclusions. If you're really particular, put the two (slicing and
+   looping) in separate files to ensure caching or optimization isn't
+   coming into play. What does this say about the inner workings of
+   Python?
+
+4. Redo this exercise such that the rotation is generic. Here, we've
+   looked at a single rotation; make an update so that you can do any
+   number of rotations. For example, rotate the compass by three:
+   WSEN.
+

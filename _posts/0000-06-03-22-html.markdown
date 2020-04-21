@@ -1,0 +1,122 @@
+---
+layout: post
+title: "Lab 22: Web programming"
+categories: lab
+date: 0000-06-03
+---
+
+## Main Event
+
+
+### <a name="html"></a>1. Static HTML
+Complete the following tasks using static-HTML. There is no
+requirement to use Python/Flask to complete this.
+
+* Write a page containing five links to five of your favorite
+  websites.
+
+* Build a 3-by-3 table, where each cell contains a number from one
+  through nine.
+
+
+### <a name="flsk"></a>2. Dynamic HTML
+The remaining exercises require that you are running a web server
+capable of executing Python code. One of the most straight forward
+frameworks is [Flask](http://flask.pocoo.org):
+
+```bash
+$> conda install flask
+```
+
+Flask's [quickstart](http://flask.pocoo.org/docs/0.12/quickstart/) is
+a good place to get a high-level understanding of the framework.
+
+
+### <a name="webtime"></a>3. Current time
+Build a page that displays the current time. The Python
+[datetime](https://docs.python.org/3/library/datetime.html) module can
+help with this:
+
+```python
+import datetime
+
+i = datetime.datetime.now()
+
+print('Current year', i.year)
+print('Current month', i.month)
+print('Current date (day)', i.day)
+print('dd/mm/yyyy format', i.day, i.month, i.year)
+print('Current hour', i.hour)
+print('Current minute', i.minute)
+print('Current second', i.second)
+print('hh:mm:ss format', i.hour, i.month, i.second)
+```
+
+These are just examples so that you get the idea. If you would like to
+experiment with these commands, it's probably best if you do it in a
+Python interpreter first, then move the commands over to your
+web-enabled Python script. You are free to print the date in any
+manner you wish.
+
+
+### <a name="webcal"></a>4. Current calendar
+Build a page that displays the month as a table. The current day
+should be highlighted by making the cell a different color:
+
+```html
+<td bgcolor="yellow">Yellow cell!</td>
+```
+
+A month can be thought of as a matrix with seven columns and a
+variable number of rows, depending on the month. Thus, building a
+calendar is essentially just a nested for-loop.
+
+Along with
+[datetime](https://docs.python.org/3/library/datetime.html), the
+[calendar](https://docs.python.org/3/library/calendar.html) module is
+useful here; as an example:
+
+```python
+import datetime
+import calendar
+
+i = datetime.datetime.now()
+c = calendar.monthrange(i.year, i.month)
+
+print(i.month, 'starts on day', c[0])
+print(i.month, 'has', c[1], 'days')
+```
+
+It is probably easiest to start your calendar from Monday. If you are
+up for the challenge, make a UAE calendar by making the first day
+Saturday.
+
+
+### <a name="multiplication"></a>5. Multiplication table
+Build a 10-by-10 multiplication table. The upper-most row and
+left-most column should be the numbers to be multiplied. The
+corresponding cell should be the result of that multiplication.
+
+
+### <a name="formatter"></a>6. ASCII to HTML
+Develop a web page that reads in the file
+[list.txt]({{site.baseurl}}/assets/lab-22/list.txt) and displays it in
+nicely formatted HTML. There are two things you must take into
+account:
+
+1. HTML does not care about ASCII new lines. The `<br>` tag is what it
+   looks for.
+
+2. The ASCII file contains lists, with each bullet denoted with a
+   space-''o''-space combination; so
+
+   ```
+   o Item 1
+   o Item 2
+   o Item 3
+   ```
+
+   would be the list in text format. HTML has its own version of
+   [bulleted lists](https://www.w3schools.com/html/html_lists.asp), to
+   which the text version needs to be converted.
+

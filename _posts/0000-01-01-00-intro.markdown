@@ -1,0 +1,42 @@
+---
+layout: post
+title: "Lab 0: Course Introduction"
+categories: overview
+topics: office hours, anaconda
+date: 0000-01-01
+---
+
+## Main Event
+
+
+### <a name="welcome"></a>1. Welcome to Intro!
+Please familiarise yourself with the course
+[syllabus]({{site.baseurl}}/syllabus), as well as the following
+articles that will serve as Zen-like guidance:
+
+* Cheating is rampant in computer science education. You should try to
+  avoid it at all costs: "[As Computer Coding Classes Swell, So Does
+  Cheating](https://nyti.ms/2rhn6r2)"
+
+* Although you should bring laptops to class, they should only be used
+  for the lab: "[Leave Your Laptops at the Door to My
+  Classroom](https://nyti.ms/2jC3xWF)"
+
+* Learning to program is like learning any other language, or even any
+  other skill: it requires focus: "[Is the economy suffering from the
+  crisis of
+  attention?](https://bankunderground.co.uk/2017/11/24/is-the-economy-suffering-from-the-crisis-of-attention/)"
+
+
+### <a name="anaconda"></a>2. Anaconda installation
+In this class you will write lots and lots of programs in Python. Once
+you write a program in Python you need another program to actually
+interpret and execute it. There are several programs that provide this
+functionality; the one we will use is Anaconda.
+
+Python comes in two *flavours*: the 2-series and the 3-series. We will
+be using the 3-series. To this end, please [download and
+install](https://www.anaconda.com/download/) the Anaconda distribution
+corresponding to Python 3. You should most likely use the "graphical
+installer," unless you absolutely know what you're doing.
+

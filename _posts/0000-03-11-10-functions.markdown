@@ -1,0 +1,141 @@
+---
+layout: post
+title: "Lab 10: Functions"
+categories: lab
+date: 0000-03-11
+---
+
+## Main Event
+
+
+### <a name="temperature"></a>1. Temperature conversion
+Write two functions that convert Fahrenheit to Celsius, and Celsius to
+Fahrenheit, respectively. Each function should take a single
+argument---the temperature---and return the converted value.
+
+
+### <a name="reverse"></a>2. List reversal
+Write a function that reverses a list. The function should take a list
+and return a reversed version. The original list---the one that the
+user has provided---should not be altered!
+
+
+### <a name="ttt"></a>3. Tic-Tac-Toe
+[Tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe) is a
+grid-based game between two players in which the objective is for one
+player to cover three consecutive vertical, horizontal, or diagonal
+tiles. The game can be developed in three steps: asking the user for a
+coordinate, placing that either an 'x' or 'y' at that coordinate
+(depending on the player), and determining if the placed coordinate
+creates a winner:
+
+1. Write a function that creates an empty board. The dimensions of the
+   board should be specified as arguments:
+
+   ```python
+     def make_board(m, n, filler):
+   ```
+
+   This function should basically return a list-of-lists: a list
+   containing *m* lists of *n* elements. Elements should have the value
+   `filler`.
+  
+2. Write a function that prints a board. The function should take an
+   *m*-by-*n* matrix and print the contents of that matrix using the
+   ASCII decorators that we've previously used:
+  
+   ```python
+     def print_board(board):
+   ```
+
+   In practice, we should be able to do the following:
+
+   ```
+   >>> board = make_board(3, 3, ' ')
+   >>> print_board(board)
+   +---+---+---+
+   |   |   |   |
+   +---+---+---+
+   |   |   |   |
+   +---+---+---+
+   |   |   |   |
+   +---+---+---+
+   ```
+
+   You can assume that all values in the board will be a single
+   character or digit. Note, however, that you cannot assume the values
+   will be strings---your function should work regardless.
+  
+3. Write a function that updates the board:
+
+   ```python
+   def update_board(board, i, j, decorator, filler):
+   ```
+   
+   where `board` is the board, `i` and `j` are the
+   coordinates, and `decorator` is the character you want to add;
+   generally either 'x' or 'o', depending on the player. This function
+   should return true or false depending on whether the board was
+   actually updated---remember, in tic-tac-toe a player can only mark
+   spots that are "open" (equal-to `filler`).
+  
+4. Write a series of functions that check to see if there is a
+   winner. In tic-tac-toe there is a winner if a player takes an
+   entire row, column, or diagonal---you should write functions for
+   each:
+  
+   ```python
+   def is_horizontal_winner(board, decorator)
+   def is_vertical_winner(board, decorator)
+   def is_diagonal_winner(board, decorator)
+   ```
+   
+   In each case, `board` is the board and `decorator` is the character
+   for which we want to check. Each function should return a Boolean
+   value signifying whether there is a winner in its respective
+   case. For purposes of this assignment, you can assume all boards
+   will have the same number of rows and columns.
+
+   Finally, compose these functions into a single function:
+   
+   ```python
+   def iswinner(board, decorator)
+   ```
+
+   that returns the disjunction of the previous three.
+
+
+### <a name="play"></a>4. Putting it all together
+Now that you have all the functions, you can build the game. First
+create the board and print it. Next, within a loop, ask a player for
+their input, print the board, and check to see if there is a
+winner. If there is, end the game; otherwise continue on to the next
+player (you can assume two players). This portion does not have to be
+in a function.
+
+
+## Additional Practice
+
+
+### <a name="ttt-ties"></a>1. Identifying ties
+One of the things our tic-tac-toe game did not do was determine if the
+game was a tie. A tie in tic-tac-toe is when there are no more
+available spaces for users to place their mark. This exercise asks you
+to update your code to do so. Specifically, write a function
+
+```python
+def istie(board, filler)
+```
+
+that returns `True` or `False` depending on whether the board is in a
+tied state. Integrate this function into your existing code so that
+game play is stopped if this is the case.
+
+
+### <a name="ttt-general"></a>2. Generalized version
+We [previously](#ttt) assumed a traditional version of tic-tac-toe in
+which the board was a 3-by-3 grid. Update your game such that it can
+be played on a board of any size. In cases where the board does not
+present a corner-to-corner diagonal, you are free to define what
+being a diagonal winner actually means.
+

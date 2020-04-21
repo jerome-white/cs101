@@ -1,0 +1,212 @@
+---
+layout: post
+title: "Lab 23: Dynamic web programming"
+categories: lab
+date: 0000-06-10
+---
+
+## Main Event
+
+
+### <a name="webcal"></a>1. Anytime calendar
+Update the calendar you made in the last lab such that the month and
+year are provided by the user. Specifically, you should add a form to
+the page that has two
+[options](https://www.w3schools.com/tags/tag_option.asp) representing
+the month and year, respectively. The form should also contain a
+submit button that when clicked, sends the form data back to the page
+(the current route) via a GET request. When generating the year
+options, you are free to use whatever date range you like.
+
+The first time the page is loaded no user information will have been
+sent. In this case, it is okay to display the current calendar.
+
+
+### <a name="multiplication"></a>2. Dynamic multiplication
+Update the multiplication table you made in the last lab such that the
+number of rows and the number of columns are provided by the user. In
+this case, the user should communicate with the page through input
+text's: one for the number of rows, and one for the number of
+columns. The form should also have a submit button that sends the user
+request back to the page using a GET request.
+
+
+### <a name="blog"></a>3. Build your own blog
+The objective of this exercise is to write a program that allows you
+to blog. The application will have two routes: one that displays
+existing posts and allows the user to post something new, and another
+that adds posts to the system.
+
+#### User interaction
+
+Define the following route:
+
+```python
+@app.route('/')
+def display():
+    # your code here
+```
+
+The function should build a form that includes the following elements:
+
+* Input text for the author name.
+
+* Input text for the subject of the post. By default, the box created
+  for input text is not very long. The size is fine for user names,
+  but not necessarily for subjects. You can change that using the `size`
+  attribute:
+
+  ```html
+  <input type="text" name="subject" size="50">
+  ```
+
+* A [textarea](https://www.w3schools.com/tags/tag_textarea.asp) in
+  which the user can type their message.
+
+* A
+  [password](https://www.w3schools.com/html/html_form_input_types.asp)
+  field.
+
+* A submit button.
+
+The form should direct the input to `/add` via a POST request.
+
+#### Adding posts to the system
+
+Posts are essentially just entries in a CSV file. Populating that CSV
+file should happen in the `add` route; thus, you should define the
+following:
+
+```python
+@app.route('/add', methods=['GET', 'POST'])
+def save():
+    # your code here
+```
+
+The `save` function, should add the information that is available from
+the POST'ed data (created by the form you just made) to a CSV file on
+your system *if the password is what you expect*. You likely do not
+want to include the password in what is saved! This is perhaps the
+only instance in which opening a file in [append
+mode](https://docs.python.org/3/library/functions.html#open) is
+suggested.
+
+Along with the information provided in the post, you should also write
+the current timestamp to the CSV file:
+
+```
+> import time
+> t = time.time()
+> print(t)
+1512536727.39614
+```
+
+A timestamp denotes the number of seconds that have passed since
+January 1970. When storing information, its representation as a float
+makes it more convenient to work with than formatted time.
+
+Once the addtion has been made, you can redirect the user (back) to
+the form via a Flask redirect:
+
+```python
+def save(): # from above
+    # ...
+    url = flask.url_for('display')
+    return flask.redirect(url)
+```
+
+The function `url_for` takes the name of the function you want
+run. Internally, Flask will build the URL that corresponds to that
+route and direct the current user to it. For a more detailed example
+of what's going, checkout the [Flask
+documentation](http://flask.pocoo.org/docs/0.12/quickstart/#url-building).
+
+#### Displaying existing posts
+
+Update your `/` route (`display` function) to *also* show your
+posts. That is, along with the form that the function already
+produces, it should produce a table inclusive of the posts in your
+post CSV file.
+
+It is probably cleanest to do this in an HTML table where a row
+(`<tr>`) consists of cells (`<td>`) consisting of information from the
+current CSV "row". You can use the [datetime]() module to convert the
+timestamp into something pretty:
+
+```
+> import datetime
+> x = datetime.datetime.fromtimestamp(t) # t from previous fragment
+> y = x.strftime('%Y-%m-%d %H:%M:%S')
+> print(y)
+2017-12-06 09:05:27
+```
+
+The string that is given to `strftime` tells the datetime object how
+to format itself. See the [Python
+documentation](https://docs.python.org/3/library/time.html#time.strftime)
+for an outline of other formats you can specify.
+
+#### Share your blog with friends!
+
+If you started your Flask application with with the special
+"all-interface" host IP
+
+```python
+app.run(host='0.0.0.0') # you may have additional parameters
+```
+
+then anyone on campus (or with access to the NYU VPN) can see your
+blog.
+
+1. Find your computers IP address. Let's assume, for example, it's
+   `1.2.3.4`.
+
+2. Start your Flask application.
+
+3. Tell a friend to visit your website: `http://1.2.3.4:5000/`. Your
+   friend should be able to see all of your posts. They can only add
+   posts if they know your password.
+
+
+## Additional Practice
+
+
+### <a name="blogfilters"></a>1. Advanced blogging
+Add new forms to your blog to alter what it displays. As you create
+more posts, this can help you make sense of what has been
+written. Doing these exercises will also make the next lab more
+enjoyable.
+
+* Display only posts from a selected author. Have `display` create an
+  additional form that contains an option and a submit button. The
+  contents of the option (each "select") should be the unique authors
+  of all blog posts. Along with the author names, the option should
+  have an additional select signifying that all posts should be
+  displayed.
+
+* Sort posts by subject. Assuming your posts are displayed in a table,
+  add a header to that table if you have not done so already. For the
+  "subject" head, make the text a link (back to the same route) that
+  provides a variable letting `display` know that posts should be
+  ordered by subject; for example:
+
+  ```html
+  <a href="/?sort=subject">Subject</a>
+  ```
+
+  When the link is followed, and Flask subsequently executes
+  `display`, you should recognize that the option has been requested
+  and display the posts accordingly.
+
+* Allow the user to specify a range of dates by which the posts are
+  filtered. There are lots of ways to do this:
+
+  1. Use two option blocks for start and end times.
+
+  2. Take the user to another page (route) that displays several month
+     calendars (use your existing code!). Each day is presented with a
+     [checkbox](https://www.w3schools.com/tags/att_input_checked.asp)
+     allowing the user to select that day. Submit sends the minimum
+     and maximum dates to the `/` route, where `display` takes them
+     into account when selecting messages to display.
+

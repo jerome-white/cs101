@@ -1,0 +1,195 @@
+---
+layout: post
+title: "Lab 5: While"
+categories: lab
+date: 0000-02-05
+---
+
+## Main Event
+
+
+### <a name="reduction"></a>1. if-reduction
+In a single Python file, make two copies of the following code:
+
+```python
+x = 3
+if x < 2:
+  print('a')
+else:
+  if x < 4:
+    print('b')
+  else:
+    if x < 6:
+      print('c')
+    else:
+      print('d')
+print(x)
+```
+
+Leave the first copy as is.
+
+In the second, do two things:
+
+1. Remove `x=3`. You can rely on the definition of `x` from the first copy.
+
+2. Simplify the code using `elif` statements. Your solution should
+   remove the nested blocks entirely.
+
+Convince yourself that your solution is correct by changing value of
+`x` and ensuring that the same thing is printed twice.
+
+
+### <a name="fizzbuzz"></a>2. FizzBuzz
+The "FizzBuzz" programming challenge is as follows:
+
+> Write a program that prints the integers from 1 to 100, but for
+> multiples of three print "Fizz" instead of the number and for the
+> multiples of five print "Buzz". For numbers that are multiples of
+> both three and five print "FizzBuzz".
+
+The problem is well known within the programming community; so much so
+that, during a technical interview, it is a common question to ask a
+candidate. As such, there are a plethora---a cornucopia even---of
+available solutions online ([one
+site](http://rosettacode.org/wiki/FizzBuzz#Python) displays six
+different ways to do this in Python!). It is *strongly recommended*
+you spend some time on this without referring to the internet: it's
+much better to get it wrong here, but understand it, than to shortcut
+and later lose out on a job.
+
+
+### <a name="list-counting"></a>3. List counting
+Consider the following list-of-lists:
+
+```python
+x = [[1, 2], [3], [4, 5, 6, 7], [8, 9]]
+```
+
+Using a for-loop:
+
+1. Count the number of even values in the list.
+2. Count the number of odd values contained in sublists with more than
+   two elements.
+
+
+### <a name="addition"></a>4. Loop addition
+Write a while-loop that adds the numbers 0 through 5 (inclusive).
+
+
+### <a name="reverse"></a>5. (More) String reversal
+Consider the following string:
+
+```python
+x = 'Billie Jean is not my lover'
+```
+
+Reverse the string using
+
+1. a for-loop, then
+2. a while-loop.
+
+You cannot use slicing or string methods!
+
+
+### <a name="friend-book"></a>6. Friend book
+Repeatedly ask the user for the names of their friends. When the user
+specifies a particular value, stop asking and display all of the names
+that they have entered.
+
+```
+Enter your friends name, or 'stop' to finish: Bob
+Enter your friends name, or 'stop' to finish: Paul
+Enter your friends name, or 'stop' to finish: Caleb
+Enter your friends name, or 'stop' to finish: stop
+You have 3 friends. They are:
+Bob,
+Paul, and
+Caleb
+```
+
+Notice that the program has listed the number of friends a person has,
+along with a comma after each name, and the word "and" to signify
+the last name is next---you should do the same.
+
+
+## Additional Practice
+
+
+### <a name="list-counting-extension"></a>1. List counting remix
+Repeat the [list counting exercise](#list-counting), but
+
+1. use a while-loop instead of a for-loop;
+
+2. create your own list: start with an empty list, then use a
+   while-loop to populate that list with lists of integers. The inner
+   lists should be of random length, and can contain random (integer)
+   values.
+
+
+### <a name="replace"></a>2. Create your own replace
+This exercise will take you through a series of steps to recreate the
+string
+[replace](https://docs.python.org/3/library/stdtypes.html#str.replace)
+method. Our version of replace will only operate on alphabetic
+characters. You should submit something unique (a separate file is
+best) for each sub-question.
+
+#### Single character, single casing
+
+Start with the static case to get your *algorithm* together. Build
+your solution using the following skeleton code:
+  
+```python
+source = 'Adam made him take a placard'
+s1 = 'a'
+s2 = 'z'
+# insert code here to create target
+print(target) # should produce 'Adzm mzde him tzke z plzczrd'
+```
+
+Note that here we're doing a literal replace: "a" is not the same
+character as "A".
+
+#### Single character, multiple casing
+  
+Update your code such that the replacement character replaces all
+instances of a given character, regardless of its casing; however, in
+the output that replacement will respect the casing. Continuing out
+example above, note the difference in `print(target)`:
+  
+```python
+source = 'Adam made him take a placard'
+s1 = 'a'
+s2 = 'z'
+# insert code here to create target
+print(target) # should produce 'Zdzm mzde him tzke z plzczrd'
+```
+
+Here "A" was replaced with "Z", the upper case version of `s2`.
+
+#### User input
+
+Update the code such that `source`, `s1`, and `s2` are specified by
+the user. An example interaction:
+  
+```
+Your string: Adam made him take a placard
+Unwanted character: a
+Replacement character: z
+Zdzm mzde him tzke z plzczrd
+```
+
+#### Multiple character, multiple casing, user input
+
+Update the code such that we replace a series of characters. In this
+case, `s1` is no longer assumed to be a single character: the user
+will specify a string; for each character *c* in that string, we
+replace instances of *c* in `source` with `s2`. An example
+interaction:
+  
+```
+Your string: Adam made take a placard
+Unwanted character(s): ae
+Replacement character: z
+Zdzm mzdz tzkz z plzczrd
+```
