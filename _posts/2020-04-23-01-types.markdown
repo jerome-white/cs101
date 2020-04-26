@@ -3,7 +3,7 @@ layout: post
 title: "Lab 1: Strings-n-things"
 categories: lab
 topics: types, variables, operators, input, string methods
-date: 2020-04-23
+date: 2020-04-26
 ---
 
 ## Main Event
@@ -28,6 +28,19 @@ Recall the three exercises we discussed in class:
 Implement these programs on your own.
 
 
+#### *Solution:*
+```python
+# String operations
+print('We will ' * 2 + 'Rock You ' * 2)
+
+# Casting
+print(int(1 / 2))
+
+# Rounding
+val = float(input('Enter a positive number: '))
+print(int(val + 0.5))
+```
+
 ### <a name="intro"></a>2. <i>"Remember the string methods, Luke"</i>
 The following exercises will require you to perform manipulation on
 strings. Please keep the [Python
@@ -45,6 +58,13 @@ Write a program that creates a new variable with all instances of
 not matter: "bob", "Bob", and "bOB" are identical.
 
 
+#### *Solution:*
+```python
+bob = "BOB! Come get Bob's bobblehead"
+barker = bob.lower().replace('bob', 'bob barker')
+print(bob, barker, sep='\n')
+```
+
 ### <a name="str-report"></a>4. String Report
 Create another string as follows:
 ```python
@@ -59,6 +79,24 @@ Using `x`,
    character? Second? As was the case with the previous questions,
    there is a string method to help you out with this.
 
+
+#### *Solution:*
+```python
+sreport = 'The quick brown fox jumped over the lazy dog'
+print(sreport.lower(),
+      sreport.upper(),
+      sreport.title(),
+      sep='\n')
+slower = sreport.lower()
+a = slower.count('a')
+e = slower.count('e')
+i = slower.count('i')
+o = slower.count('o')
+u = slower.count('u')
+vowels = a + e + i + o + u
+print('Vowel count: ' + str(vowels))
+print('z:', sreport.find('z'))
+```
 
 ### <a name="madlibs"></a>5. Madlibs
 Make a sentence based on user input. Prompt the user for four inputs
@@ -81,6 +119,25 @@ There she saw a 2 year old dragon.
 
 Your story should be different!
 
+
+#### *Solution:*
+```python
+adj1 = input("Enter an adjective: ")
+adj2 = input("Enter another adjective: ")
+adj3 = input("Enter one more adjective: ")
+
+noun1 = input("Enter a noun: ")
+noun2 = input("Enter another noun: ")
+noun3 = input("Enter one more noun: ")
+
+num1 = input("Enter a number: ")
+num2 = input("Enter another number: ")
+
+print("The " + adj1 + " " + adj2 + " bear " +
+      "went into a " + noun1 + " to get " + num1 + " apples. " +
+      "She then entered a " + noun2 + " store " + num2 + " times " +
+      "to have a " + adj3 + " " + noun3)
+```
 
 ### <a name="adder"></a>6. Interactive addition
 Request four numbers from the user using four separate input
@@ -106,6 +163,19 @@ Please enter the fourth number:          4
 ```
 Should still print 46.
 
+
+#### *Solution:*
+```python
+a = input('Please enter the first number: ')
+b = input('Please enter the second number: ')
+c = input('Please enter the third number: ')
+d = input('Please enter the fourth number: ')
+
+x = int(a.strip() + b.strip())
+y = int(c.strip() + d.strip())
+
+print(x + y)
+```
 
 ## Additional Practice
 
@@ -146,3 +216,21 @@ That was 1 day ago
 ```
 Pluralization of the output ("day" versus "days") is optional.
 
+
+#### *Solution:*
+```python
+import datetime
+from scipy import constants
+
+month = int(input('Please enter a month: '))
+day = int(input('Please enter a day: '))
+year = int(input('Please enter a year: '))
+
+today = datetime.datetime.today()
+yesterday = datetime.datetime(year, month, day)
+diff = today - yesterday
+
+days = diff.total_seconds() / constants.day
+
+print('That was ' + str(days) + ' days ago')
+```
