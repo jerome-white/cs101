@@ -38,6 +38,28 @@ Use indexing, slicing, and stepping to achieve the following:
 These can all be accomplished without converting the string to a list!
 
 
+#### *Solution:*
+```python
+x = 'pony stash token'
+
+print(x[0],      # first letter
+      x[-1],     # last letter
+      x[1:-1],   # except first and last
+      x[::2],    # every other
+      x[::3],    # "python"
+      sep='\n')
+
+# There are several ways to accomplish the "last backwards". Here are
+# a few:
+print(x[-len('token'):][::-1],
+      x[-1:-6:-1],
+      x[:10:-1],
+      sep='\n')
+
+x = x[:5] + 'tony' + x[10:]
+print(x)
+```
+
 ### <a name="cname"></a>2. Computer names
 Computer user names are often some combination of a persons actual
 name. For example, NYU uses your initials---the respective first
@@ -57,6 +79,24 @@ name. Thus, if the user were to have entered "Bob Paul Mitchell
 Hopefully", the computer name would have been the same
 (`bfepoh`).
 
+
+#### *Solution:*
+```python
+name = input('Please enter your full name: ')
+
+first_initial = name[0]
+
+names = name.split()
+last_name = names[-1]
+last_five = last_name[4::-1] # last_name[:5][::-1] is also fine
+
+complete = first_initial + last_five
+
+print(complete.lower())
+
+# Or, in a single line:
+# print((name[0] + name.split()[-1][4::-1]).lower())
+```
 
 ### <a name="list-interaction"></a>3. List interaction
 This exercise will have you manipulate a list based on interaction
@@ -102,6 +142,30 @@ website](https://docs.python.org/3/tutorial/datastructures.html#more-on-lists).
    ['apple', 'dog', 'honey', 'red']
    ```
 
+
+#### *Solution:*
+```python
+# 1
+x = input('Please enter a list of words separated by commas: ')
+y = x.split(',')
+y.sort()
+print(y)
+
+# 2
+x = input('Please enter another list of words separated by commas: ')
+y.extend(x.split(','))
+y.sort()
+print(y)
+
+# 3
+x = input('Please enter a word: ')
+index = y.index(x)
+print(index)
+
+# 4
+y.pop(index)
+print(y)
+```
 
 ### <a name="dice-game"></a>4. Dice game
 "Dice game" is the second most amazing one-player game ever created:
@@ -172,6 +236,22 @@ or know how to produce) and something else that you might want
 (strings and sentences).
 
 
+#### *Solution:*
+```python
+import random
+
+die = ['one', 'two', 'three', 'four', 'five', 'six']
+ans = ['Incorrect', 'Correct']
+
+roll = random.randint(1, len(die))
+
+guess = int(input('Enter a number: '))
+word = die[roll]
+response = ans[int(guess == roll)] + '!'
+
+print(response)
+```
+
 ## Additional Practice
 
 
@@ -193,3 +273,22 @@ later as well. The trick is to remember the concepts of string
 concatenation and repetition that we talked about previously---that's
 all you need!
 
+
+#### *Solution:*
+```python
+import random
+
+die = ['one', 'two', 'three', 'four', 'five', 'six']
+ans = ['Incorrect', 'Correct']
+
+roll = random.randint(1, len(die))
+
+guess = int(input('Enter a number: '))
+word = die[roll]
+response = ans[int(guess == roll)] + '!'
+
+edge = '+' + '-' * (len(word) + 2) + '+'
+
+print(edge, '| ' + word + ' |', edge, sep='\n')
+print(response)
+```
